@@ -1,7 +1,36 @@
-//
-//  song.json
-//  MusicPlayer
-//
-//  Created by Jose Daniel Espinoza Gomez on 25/05/26.
-//
-
+{
+    "songs": [
+        {
+            "title": "Bohemian Rhapsody",
+            "artist": "Queen",
+            "fileName": "bohemian",
+            "duration": "5:55",
+            "genre": "Rock",
+            "isFavorite": true
+        },
+        {
+            "title": "Shape of You",
+            "artist": "Ed Sheeran",
+            "fileName": "shape",
+            "duration": "3:53",
+            "genre": "Pop",
+            "isFavorite": false
+        },
+        {
+            "title": "Billie Jean",
+            "artist": "Michael Jackson",
+            "fileName": "billie",
+            "duration": "4:54",
+            "genre": "Pop",
+            "isFavorite": true
+        },
+        {
+            "title": "Stairway to Heaven",
+            "artist": "Led Zeppelin",
+            "fileName": "stairway",
+            "duration": "8:02",
+            "genre": "Rock",
+            "isFavorite": false
+        }
+    ]
+}
