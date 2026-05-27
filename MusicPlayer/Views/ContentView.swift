@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  MusicPlayer1.0
+//  MusicPlayer
 //
 //  Created by Jose Daniel Espinoza Gomez on 20/05/26.
 //
@@ -15,9 +15,39 @@ struct ContentView: View {
     @State private var showProfile = false
     @State private var showPlayer = false
     
+    // MARK: - Propiedades para búsqueda y filtrado
+    @State private var searchText = ""
+    @State private var selectedGenre = "Todos"
+    
+    // Lista de géneros disponibles (basada en las canciones)
+    var availableGenres: [String] {
+        let genres = Set(viewModel.songs.map { $0.genre })
+        return ["Todos"] + genres.sorted()
+    }
+    
+    // Canciones filtradas por búsqueda y género
+    var filteredSongs: [Song] {
+        var filtered = viewModel.songs
+        
+        // Filtro por género
+        if selectedGenre != "Todos" {
+            filtered = filtered.filter { $0.genre == selectedGenre }
+        }
+        
+        // Filtro por búsqueda
+        if !searchText.isEmpty {
+            filtered = filtered.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText) ||
+                $0.artist.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+        
+        return filtered
+    }
+    
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 0) {
                 // Header con información del usuario y botones
                 HStack {
                     VStack(alignment: .leading) {
@@ -56,18 +86,53 @@ struct ContentView: View {
                 }
                 .padding()
                 
-                // Lista de canciones
-                List {
-                    ForEach(viewModel.songs) { song in
-                        SongRowItem(song: song, viewModel: viewModel)
-                            .onTapGesture {
-                                audioPlayerVM.play(song: song)
-                                showPlayer = true
+                // Barra de búsqueda
+                SearchBar(text: $searchText, placeholder: "Buscar canción o artista")
+                    .padding(.horizontal)
+                    .padding(.bottom, 8)
+                
+                // Filtro por género (Scroll horizontal)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 12) {
+                        ForEach(availableGenres, id: \.self) { genre in
+                            GenreChip(genre: genre, isSelected: selectedGenre == genre) {
+                                selectedGenre = genre
                             }
+                        }
                     }
-                    .onDelete(perform: viewModel.deleteSong)
+                    .padding(.horizontal)
                 }
-                .listStyle(.plain)
+                .padding(.bottom, 8)
+                
+                // Lista de canciones filtradas
+                if filteredSongs.isEmpty {
+                    VStack(spacing: 20) {
+                        Spacer()
+                        Image(systemName: "music.note.list")
+                            .font(.system(size: 60))
+                            .foregroundColor(.gray)
+                        Text("No se encontraron canciones")
+                            .font(.headline)
+                            .foregroundColor(.gray)
+                        Text("Prueba con otro filtro o agrega nuevas canciones")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                        Spacer()
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                } else {
+                    List {
+                        ForEach(filteredSongs) { song in
+                            SongRowItem(song: song, viewModel: viewModel)
+                                .onTapGesture {
+                                    audioPlayerVM.play(song: song)
+                                    showPlayer = true
+                                }
+                        }
+                        .onDelete(perform: deleteSong)
+                    }
+                    .listStyle(.plain)
+                }
             }
             .navigationDestination(isPresented: $showAddSong) {
                 AddSongView(viewModel: viewModel)
@@ -80,6 +145,66 @@ struct ContentView: View {
                 PlayerView(audioPlayerVM: audioPlayerVM)
             }
         }
+    }
+    
+    private func deleteSong(at offsets: IndexSet) {
+        // Eliminar las canciones originales (no las filtradas)
+        let songsToDelete = offsets.map { filteredSongs[$0] }
+        for song in songsToDelete {
+            if let index = viewModel.songs.firstIndex(where: { $0.id == song.id }) {
+                viewModel.songs.remove(at: index)
+            }
+        }
+        viewModel.saveSongs()
+    }
+}
+
+// MARK: - SearchBar Component
+struct SearchBar: View {
+    @Binding var text: String
+    var placeholder: String
+    
+    var body: some View {
+        HStack {
+            Image(systemName: "magnifyingglass")
+                .foregroundColor(.gray)
+            
+            TextField(placeholder, text: $text)
+                .textFieldStyle(PlainTextFieldStyle())
+                .autocapitalization(.none)
+            
+            if !text.isEmpty {
+                Button(action: {
+                    text = ""
+                }) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundColor(.gray)
+                }
+            }
+        }
+        .padding(10)
+        .background(Color.gray.opacity(0.1))
+        .cornerRadius(10)
+    }
+}
+
+// MARK: - Genre Chip Component
+struct GenreChip: View {
+    let genre: String
+    let isSelected: Bool
+    let action: () -> Void
+    
+    var body: some View {
+        Button(action: action) {
+            Text(genre)
+                .font(.subheadline)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+                .background(isSelected ? Color.blue : Color.gray.opacity(0.2))
+                .foregroundColor(isSelected ? .white : .primary)
+                .cornerRadius(20)
+        }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -104,9 +229,14 @@ struct SongRowItem: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
+                // Mostrar género en una línea separada
                 Text(song.genre)
                     .font(.caption2)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.blue)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(Color.blue.opacity(0.1))
+                    .cornerRadius(10)
             }
             
             Spacer()

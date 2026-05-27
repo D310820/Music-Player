@@ -4,9 +4,15 @@
 //
 //  Created by Jose Daniel Espinoza Gomez on 21/05/26.
 //
+//  AddSongView.swift
+//  MusicPlayer1.0
+//
+//  Created by Jose Daniel Espinoza Gomez on 21/05/26.
+//
 
 import SwiftUI
 import UniformTypeIdentifiers
+import AVFoundation
 
 struct AddSongView: View {
     @ObservedObject var viewModel: SongViewModel
@@ -15,7 +21,6 @@ struct AddSongView: View {
     @State private var title = ""
     @State private var artist = ""
     @State private var genre = "Pop"
-    @State private var duration = ""
     @State private var showingFilePicker = false
     @State private var selectedFileURL: URL?
     @State private var fileName = ""
@@ -26,7 +31,7 @@ struct AddSongView: View {
     let genres = ["Pop", "Rock", "Jazz", "Clásica", "Electrónica", "Hip Hop", "Reggae", "Alternativa", "Indie", "Metal"]
     
     var isFormValid: Bool {
-        !title.isEmpty && !artist.isEmpty && !duration.isEmpty && !fileName.isEmpty
+        !title.isEmpty && !artist.isEmpty && !fileName.isEmpty
     }
     
     var body: some View {
@@ -44,9 +49,6 @@ struct AddSongView: View {
                             Text(genre).tag(genre)
                         }
                     }
-                    
-                    TextField("Duración (ej: 3:45)", text: $duration)
-                        .keyboardType(.default)
                 }
                 
                 Section(header: Text("Archivo de música")) {
@@ -162,14 +164,6 @@ struct AddSongView: View {
     }
     
     private func saveSong() {
-        // Validar formato de duración
-        let durationPattern = #"^\d{1,2}:\d{2}$"#
-        guard let _ = duration.range(of: durationPattern, options: .regularExpression) else {
-            alertMessage = "Formato de duración inválido. Usa MM:SS (ej: 3:45)"
-            showingAlert = true
-            return
-        }
-        
         // Guardar archivo si no se ha guardado
         if let sourceURL = selectedFileURL {
             let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -186,7 +180,9 @@ struct AddSongView: View {
             }
         }
         
-        // Crear la canción
+        // Crear la canción con duración automática o por defecto
+        let duration = getAudioDuration() ?? "3:00"
+        
         let success = viewModel.addSong(
             title: title,
             artist: artist,
@@ -205,11 +201,25 @@ struct AddSongView: View {
         }
     }
     
+    private func getAudioDuration() -> String? {
+        guard let sourceURL = selectedFileURL else { return nil }
+        
+        do {
+            let audioPlayer = try AVAudioPlayer(contentsOf: sourceURL)
+            let duration = audioPlayer.duration
+            let minutes = Int(duration) / 60
+            let seconds = Int(duration) % 60
+            return String(format: "%d:%02d", minutes, seconds)
+        } catch {
+            print("Error al obtener duración: \(error)")
+            return nil
+        }
+    }
+    
     private func resetForm() {
         title = ""
         artist = ""
         genre = "Pop"
-        duration = ""
         fileName = ""
         selectedFileURL = nil
     }

@@ -1,11 +1,12 @@
 //
 //  SongViewModel.swift
-//  MusicPlayer1.0
+//  MusicPlayer1
 //
 //  Created by Jose Daniel Espinoza Gomez on 20/05/26.
 //
 
 import SwiftUI
+import Foundation
 import Combine
 
 class SongViewModel: ObservableObject {
@@ -24,11 +25,13 @@ class SongViewModel: ObservableObject {
             }
         }
         
-        // Canciones de ejemplo
+        // Canciones de ejemplo con géneros
         songs = [
             Song(id: UUID(), title: "Bohemian Rhapsody", artist: "Queen", genre: "Rock", duration: "5:55", fileName: "bohemian"),
             Song(id: UUID(), title: "Imagine", artist: "John Lennon", genre: "Pop", duration: "3:03", fileName: "imagine"),
-            Song(id: UUID(), title: "Billie Jean", artist: "Michael Jackson", genre: "Pop", duration: "4:54", fileName: "billie_jean")
+            Song(id: UUID(), title: "Billie Jean", artist: "Michael Jackson", genre: "Pop", duration: "4:54", fileName: "billie_jean"),
+            Song(id: UUID(), title: "Shape of You", artist: "Ed Sheeran", genre: "Pop", duration: "3:53", fileName: "shape_of_you"),
+            Song(id: UUID(), title: "Stairway to Heaven", artist: "Led Zeppelin", genre: "Rock", duration: "8:02", fileName: "stairway")
         ]
     }
     
@@ -52,7 +55,6 @@ class SongViewModel: ObservableObject {
         return true
     }
     
-    // Nuevo método para actualizar una canción
     func updateSong(_ updatedSong: Song) {
         if let index = songs.firstIndex(where: { $0.id == updatedSong.id }) {
             songs[index] = updatedSong
@@ -72,7 +74,7 @@ class SongViewModel: ObservableObject {
         }
     }
     
-    private func saveSongs() {
+    func saveSongs() {
         if let encoded = try? JSONEncoder().encode(songs) {
             UserDefaults.standard.set(encoded, forKey: "savedSongs")
         }

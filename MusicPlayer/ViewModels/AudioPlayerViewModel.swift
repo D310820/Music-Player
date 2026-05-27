@@ -4,7 +4,7 @@
 //
 //  Created by Jose Daniel Espinoza Gomez on 20/05/26.
 //
-
+import Foundation
 import SwiftUI
 import AVFoundation
 import MediaPlayer
