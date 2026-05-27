@@ -1,9 +1,11 @@
 //
 //  AudioPlayerViewModel.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 20/05/26.
-//
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 20/05/26.
 import Foundation
 import SwiftUI
 import AVFoundation
@@ -21,7 +23,6 @@ class AudioPlayerViewModel: NSObject, ObservableObject {
     private var audioPlayer: AVAudioPlayer?
     private var timer: Timer?
     
-    // MARK: - Initialization
     override init() {
         super.init()
         setupAudioSession()
@@ -29,7 +30,6 @@ class AudioPlayerViewModel: NSObject, ObservableObject {
         playlist = Song.sampleSongs
     }
     
-    // MARK: - Configuration
     private func setupAudioSession() {
         do {
             let audioSession = AVAudioSession.sharedInstance()
@@ -64,7 +64,6 @@ class AudioPlayerViewModel: NSObject, ObservableObject {
         }
     }
     
-    // MARK: - Control de Reproducción
     func play(song: Song? = nil) {
         if let newSong = song {
             currentSong = newSong
@@ -171,7 +170,6 @@ class AudioPlayerViewModel: NSObject, ObservableObject {
     }
 }
 
-// MARK: - AVAudioPlayerDelegate
 extension AudioPlayerViewModel: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         if flag {

@@ -1,10 +1,11 @@
 //
 //  EditSongView.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 25/05/26.
-//
-
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 25/05/26.
 import SwiftUI
 
 struct EditSongView: View {
@@ -20,7 +21,6 @@ struct EditSongView: View {
     
     let genres = ["Pop", "Rock", "Jazz", "Clásica", "Electrónica", "Hip Hop", "Reggae", "Alternativa", "Indie", "Metal"]
     
-    // Inicializador para establecer los valores iniciales
     init(viewModel: SongViewModel, song: Song) {
         self.viewModel = viewModel
         self.song = song
@@ -70,7 +70,6 @@ struct EditSongView: View {
     }
     
     private func updateSong() {
-        // Crear una canción actualizada
         let updatedSong = Song(
             id: song.id,
             title: title,
@@ -81,10 +80,8 @@ struct EditSongView: View {
             artworkData: nil
         )
         
-        // Llamar al método updateSong del viewModel
         viewModel.updateSong(updatedSong)
         
-        // Cerrar la vista
         dismiss()
     }
 }

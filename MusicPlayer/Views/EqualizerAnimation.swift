@@ -1,11 +1,11 @@
 //
 //  EqualizerAnimation.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 21/05/26.
-//
-// Views/EqualizerAnimation.swift
-
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 21/05/26.
 import SwiftUI
 struct EqualizerAnimation: View {
     @State private var animate = false

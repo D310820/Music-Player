@@ -1,9 +1,11 @@
 //
 //  Song.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 20/05/26.
-//
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 20/05/26.
 
 import Foundation
 import SwiftUI
@@ -15,7 +17,7 @@ struct Song: Identifiable, Codable {
     let genre: String
     let duration: String
     let fileName: String
-    var artworkData: Data? // Para la imagen del álbum
+    var artworkData: Data?
     
     init(id: UUID = UUID(), title: String, artist: String, genre: String, duration: String, fileName: String, artworkData: Data? = nil) {
         self.id = id
@@ -27,19 +29,15 @@ struct Song: Identifiable, Codable {
         self.artworkData = artworkData
     }
     
-    // Propiedad computada para obtener la URL del archivo
     var fileURL: URL? {
-        // Buscar en el bundle principal
         if let url = Bundle.main.url(forResource: fileName, withExtension: "mp3") {
             return url
         }
-        // Buscar en documentos
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileURL = documentsPath.appendingPathComponent("\(fileName).mp3")
         return FileManager.default.fileExists(atPath: fileURL.path) ? fileURL : nil
     }
     
-    // Canciones de ejemplo (estático)
     static var sampleSongs: [Song] {
         return [
             Song(title: "Bohemian Rhapsody", artist: "Queen", genre: "Rock", duration: "5:55", fileName: "bohemian"),
@@ -49,7 +47,7 @@ struct Song: Identifiable, Codable {
     }
 }
 
-// Para hacer que Song sea Equatable
+
 extension Song: Equatable {
     static func == (lhs: Song, rhs: Song) -> Bool {
         lhs.id == rhs.id

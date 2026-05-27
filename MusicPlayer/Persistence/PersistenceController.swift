@@ -1,9 +1,11 @@
 //
 //  PersistenceController.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 21/05/26.
-// Persistence/PersistenceController.swift
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 21/05/26.
 import CoreData
 import Foundation
 
@@ -15,7 +17,6 @@ struct PersistenceController {
     init() {
         container = NSPersistentContainer(name: "MusicModel")
         
-        // ✅ CORRECCIÓN: El primer parámetro es la descripción, no el error
         container.loadPersistentStores { _, error in
             if let error = error {
                 print("❌ Error CoreData: \(error.localizedDescription)")

@@ -1,16 +1,18 @@
 //
 //  User.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 21/05/26.
-// Models/User.swift
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 21/05/26.
 import Foundation
 
 struct User: Codable, Identifiable {
     let id: UUID
     var email: String
     var username: String
-    var password: String  // En producción usar hash
+    var password: String
     var joinDate: Date
     
     init(id: UUID = UUID(), email: String, username: String, password: String) {
@@ -22,7 +24,6 @@ struct User: Codable, Identifiable {
     }
 }
 
-// Para persistencia de sesión
 struct Session: Codable {
     let userId: UUID
     let username: String

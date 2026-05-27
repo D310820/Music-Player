@@ -1,10 +1,11 @@
 //
 //  RegisterView.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 21/05/26.
-//
-
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 21/05/26.
 import SwiftUI
 
 struct RegisterView: View {
@@ -17,7 +18,6 @@ struct RegisterView: View {
     
     var body: some View {
         VStack(spacing: 25) {
-            // Logo y título
             VStack(spacing: 15) {
                 Image(systemName: "music.note.list")
                     .font(.system(size: 70))
@@ -35,7 +35,6 @@ struct RegisterView: View {
             
             Spacer()
             
-            // Formulario de registro
             VStack(spacing: 20) {
                 HStack {
                     Image(systemName: "person")
@@ -86,7 +85,6 @@ struct RegisterView: View {
             }
             .padding(.horizontal)
             
-            // Mensaje de error
             if authViewModel.showError, let error = authViewModel.errorMessage {
                 Text(error)
                     .font(.caption)
@@ -95,7 +93,6 @@ struct RegisterView: View {
                     .padding(.horizontal)
             }
             
-            // Botón de registro
             Button(action: {
                 Task {
                     // Verificar que las contraseñas coincidan
@@ -112,7 +109,6 @@ struct RegisterView: View {
                     )
                     
                     if success {
-                        // Regresar al login después de registrarse exitosamente
                         dismiss()
                     }
                 }
@@ -135,7 +131,6 @@ struct RegisterView: View {
             .disabled(username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty || authViewModel.isLoading)
             .padding(.horizontal)
             
-            // Botón para volver al login
             Button(action: {
                 dismiss()
             }) {

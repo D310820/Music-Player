@@ -1,10 +1,11 @@
 ////
 //  ProfileView.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 20/05/26.
-//
-
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 20/05/26.
 import SwiftUI
 
 struct ProfileView: View {
@@ -15,7 +16,6 @@ struct ProfileView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            // Información del usuario
             VStack(spacing: 10) {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 100))
@@ -33,7 +33,6 @@ struct ProfileView: View {
             
             Spacer()
             
-            // Botón Cerrar Sesión
             Button(action: {
                 showingLogoutAlert = true
             }) {
@@ -57,7 +56,6 @@ struct ProfileView: View {
                 Text("¿Estás seguro de que quieres cerrar sesión?")
             }
             
-            // Botón Borrar Cuenta
             Button(action: {
                 showingDeleteAlert = true
             }) {

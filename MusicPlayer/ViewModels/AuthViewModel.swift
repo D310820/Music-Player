@@ -1,10 +1,11 @@
 //
 //  AuthViewModel.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 20/05/26.
-//
-
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 20/05/26.
 import SwiftUI
 import Combine
 
@@ -28,7 +29,6 @@ class AuthViewModel: ObservableObject {
                 return
             }
         }
-        // Si no hay sesión guardada, asegurar que isLoggedIn es false
         currentSession = nil
         isLoggedIn = false
         print("❌ No hay sesión activa")
@@ -40,10 +40,8 @@ class AuthViewModel: ObservableObject {
         showError = false
         errorMessage = nil
         
-        // Simular delay de red
         try? await Task.sleep(nanoseconds: 1_000_000_000)
         
-        // Validación simple
         if email.contains("@") && password.count >= 4 {
             let user = UserSession(
                 id: UUID().uuidString,
@@ -53,7 +51,6 @@ class AuthViewModel: ObservableObject {
             currentSession = user
             isLoggedIn = true
             
-            // Guardar sesión
             if let encoded = try? JSONEncoder().encode(user) {
                 UserDefaults.standard.set(encoded, forKey: "userSession")
             }

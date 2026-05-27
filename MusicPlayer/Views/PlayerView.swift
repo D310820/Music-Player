@@ -1,10 +1,11 @@
 //
 //  PlayerView.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 20/05/26.
-//
-
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 20/05/26.
 import SwiftUI
 
 struct PlayerView: View {
@@ -13,7 +14,6 @@ struct PlayerView: View {
     
     var body: some View {
         VStack(spacing: 30) {
-            // Arte de la canción
             ZStack {
                 Circle()
                     .fill(Color.blue.opacity(0.2))
@@ -25,7 +25,6 @@ struct PlayerView: View {
             }
             .padding(.top, 50)
             
-            // Información de la canción
             VStack(spacing: 8) {
                 Text(audioPlayerVM.currentSong?.title ?? "Sin canción")
                     .font(.title)
@@ -36,7 +35,6 @@ struct PlayerView: View {
                     .foregroundColor(.secondary)
             }
             
-            // Progress bar
             VStack(spacing: 8) {
                 Slider(value: Binding(
                     get: { audioPlayerVM.currentTime },
@@ -54,7 +52,6 @@ struct PlayerView: View {
             }
             .padding(.horizontal)
             
-            // Controles de reproducción
             HStack(spacing: 40) {
                 Button(action: { audioPlayerVM.previousTrack() }) {
                     Image(systemName: "backward.fill")
@@ -73,7 +70,6 @@ struct PlayerView: View {
             }
             .foregroundColor(.blue)
             
-            // Volume slider
             HStack {
                 Image(systemName: "speaker.fill")
                     .foregroundColor(.gray)

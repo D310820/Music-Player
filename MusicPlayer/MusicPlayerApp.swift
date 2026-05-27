@@ -1,13 +1,14 @@
-///
-//  MusicPlayer1_0App.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 20/05/26.
-//
+//  MusicPlayerApp.swift
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 20/05/26.
 import SwiftUI
 
 @main
-struct MusicPlayer1_0App: App {
+struct MusicPlayerApp: App {
     @StateObject private var authViewModel = AuthViewModel()
     
     var body: some Scene {

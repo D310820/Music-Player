@@ -1,10 +1,11 @@
 //
 //  LoginView.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 21/05/26.
-//
-
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 21/05/26.
 import SwiftUI
 
 struct LoginView: View {
@@ -17,7 +18,6 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 25) {
-                // Logo y título
                 VStack(spacing: 15) {
                     Image(systemName: "music.note.list")
                         .font(.system(size: 70))
@@ -32,7 +32,6 @@ struct LoginView: View {
                         .foregroundColor(.secondary)
                 }
                 .padding(.top, 60)
-                // Agrega esto al final del VStack en LoginView, antes del último Spacer()
                 Button("Limpiar Datos Guardados") {
                     UserDefaults.standard.removeObject(forKey: "userSession")
                     UserDefaults.standard.removeObject(forKey: "savedSongs")
@@ -43,7 +42,6 @@ struct LoginView: View {
                 
                 Spacer()
                 
-                // Formulario de login
                 VStack(spacing: 20) {
                     HStack {
                         Image(systemName: "envelope")
@@ -71,7 +69,6 @@ struct LoginView: View {
                 }
                 .padding(.horizontal)
                 
-                // Mensaje de error
                 if authViewModel.showError, let error = authViewModel.errorMessage {
                     Text(error)
                         .font(.caption)
@@ -79,11 +76,9 @@ struct LoginView: View {
                         .padding(.horizontal)
                 }
                 
-                // Botón de login
                 Button(action: {
                     Task {
                         await authViewModel.login(email: email, password: password)
-                        // La navegación se maneja automáticamente por el App principal
                     }
                 }) {
                     HStack {
@@ -104,7 +99,6 @@ struct LoginView: View {
                 .disabled(email.isEmpty || password.isEmpty || authViewModel.isLoading)
                 .padding(.horizontal)
                 
-                // Botón de registro
                 HStack {
                     Text("¿No tienes cuenta?")
                         .foregroundColor(.secondary)

@@ -1,15 +1,11 @@
 ////
 //  AddSongView.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 21/05/26.
-//
-//  AddSongView.swift
-//  MusicPlayer1.0
-//
-//  Created by Jose Daniel Espinoza Gomez on 21/05/26.
-//
-
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 21/05/26.
 import SwiftUI
 import UniformTypeIdentifiers
 import AVFoundation
@@ -145,11 +141,9 @@ struct AddSongView: View {
     private func saveSongToAppDirectory() {
         guard let sourceURL = selectedFileURL else { return }
         
-        // Obtener el directorio de documentos de la app
         let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let destinationURL = documentsPath.appendingPathComponent("\(fileName).mp3")
         
-        // Copiar el archivo al directorio de la app
         do {
             if FileManager.default.fileExists(atPath: destinationURL.path) {
                 try FileManager.default.removeItem(at: destinationURL)
@@ -180,7 +174,6 @@ struct AddSongView: View {
             }
         }
         
-        // Crear la canción con duración automática o por defecto
         let duration = getAudioDuration() ?? "3:00"
         
         let success = viewModel.addSong(

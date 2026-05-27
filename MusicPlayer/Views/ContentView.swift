@@ -1,10 +1,11 @@
 //
 //  ContentView.swift
 //  MusicPlayer
-//
-//  Created by Jose Daniel Espinoza Gomez on 20/05/26.
-//
-
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 20/05/26.
 import SwiftUI
 
 struct ContentView: View {
@@ -48,7 +49,6 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
-                // Header con información del usuario y botones
                 HStack {
                     VStack(alignment: .leading) {
                         Text("Hola, \(authViewModel.currentSession?.username ?? "Usuario")")
@@ -61,7 +61,6 @@ struct ContentView: View {
                     
                     Spacer()
                     
-                    // Botón para agregar canción (+)
                     Button(action: { showAddSong = true }) {
                         Circle()
                             .fill(Color.green.opacity(0.2))
@@ -73,7 +72,6 @@ struct ContentView: View {
                             )
                     }
                     
-                    // Botón de perfil/usuario
                     Button(action: { showProfile = true }) {
                         Circle()
                             .fill(Color.blue.opacity(0.2))
@@ -86,12 +84,10 @@ struct ContentView: View {
                 }
                 .padding()
                 
-                // Barra de búsqueda
                 SearchBar(text: $searchText, placeholder: "Buscar canción o artista")
                     .padding(.horizontal)
                     .padding(.bottom, 8)
                 
-                // Filtro por género (Scroll horizontal)
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         ForEach(availableGenres, id: \.self) { genre in
@@ -104,7 +100,6 @@ struct ContentView: View {
                 }
                 .padding(.bottom, 8)
                 
-                // Lista de canciones filtradas
                 if filteredSongs.isEmpty {
                     VStack(spacing: 20) {
                         Spacer()
@@ -159,7 +154,6 @@ struct ContentView: View {
     }
 }
 
-// MARK: - SearchBar Component
 struct SearchBar: View {
     @Binding var text: String
     var placeholder: String
@@ -188,7 +182,6 @@ struct SearchBar: View {
     }
 }
 
-// MARK: - Genre Chip Component
 struct GenreChip: View {
     let genre: String
     let isSelected: Bool
@@ -208,7 +201,6 @@ struct GenreChip: View {
     }
 }
 
-// MARK: - SongRowItem
 struct SongRowItem: View {
     let song: Song
     @ObservedObject var viewModel: SongViewModel
@@ -229,7 +221,6 @@ struct SongRowItem: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                 
-                // Mostrar género en una línea separada
                 Text(song.genre)
                     .font(.caption2)
                     .foregroundColor(.blue)
@@ -249,7 +240,6 @@ struct SongRowItem: View {
                 .background(Color.gray.opacity(0.1))
                 .cornerRadius(8)
             
-            // Botón de editar
             Button(action: {
                 showEditSheet = true
             }) {

@@ -1,10 +1,11 @@
-//
-//  SongViewModel.swift
-//  MusicPlayer1
-//
-//  Created by Jose Daniel Espinoza Gomez on 20/05/26.
-//
 
+//  SongViewModel.swift
+//  MusicPlayer
+//  integrantes Jose Daniel Espinoza Gomez,
+//  Sofia Arely Constantino Perez ,
+//  Alejandre Mayreni Vazquez Velazquez,
+//  Manuela Alejandra Garay Ramires.
+//  Fecha 20/05/26.
 import SwiftUI
 import Foundation
 import Combine
@@ -17,7 +18,6 @@ class SongViewModel: ObservableObject {
     }
     
     func loadSongs() {
-        // Cargar canciones guardadas
         if let savedSongs = UserDefaults.standard.data(forKey: "savedSongs") {
             if let decodedSongs = try? JSONDecoder().decode([Song].self, from: savedSongs) {
                 songs = decodedSongs
@@ -25,7 +25,6 @@ class SongViewModel: ObservableObject {
             }
         }
         
-        // Canciones de ejemplo con géneros
         songs = [
             Song(id: UUID(), title: "Bohemian Rhapsody", artist: "Queen", genre: "Rock", duration: "5:55", fileName: "bohemian"),
             Song(id: UUID(), title: "Imagine", artist: "John Lennon", genre: "Pop", duration: "3:03", fileName: "imagine"),
